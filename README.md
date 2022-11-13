@@ -20,7 +20,13 @@ meaning easier AV bypass.
 Cross-compiling works using [MinGW](http://www.mingw.org/) on Linux:
 
 ```
-x86_64-w64-mingw32-gcc service.c -lnetapi32 -s -o service.exe
+x86_64-w64-mingw32-gcc service.c -DINCLUDE_PAYLOAD -lnetapi32 -s -o service.exe
+```
+
+For alternative usage (without payload, specifying custom service name):
+
+```
+x86_64-w64-mingw32-gcc service.c -DSERVICE_NAME=\"InfobloxBloxOne\" -lnetapi32 -s -o infoblox_rc_service.exe
 ```
 
 Compiling was tested on [Arch Linux](https://www.archlinux.org/)
